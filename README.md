@@ -1,57 +1,56 @@
-# Northcoders News API
 
-## Background
+# nc news
 
-We will be building an API for the purpose of accessing application data programmatically. The intention here is to mimic the building of a real world backend service (such as reddit) which should provide this information to the front end architecture.
+## Link
 
-Your database will be PSQL, and you will interact with it using [node-postgres](https://node-postgres.com/).
+https://tavelar-app.herokuapp.com/api
 
-## Kanban
+## Project Summary
 
-### Link to your Trello Board here: https://trello.com/b/7yiHe1nI
+- nc news serves as a database for getting, posting, patching and deleting news articles via http requests.
+- Each article entered into the database has associated, and other users are allowed to comment on the articles.
+- Both comments and articles can recieve notes (positive and negative)
+- Articles have associated topics, and can be sorted by topic, user, votes, comment_count etc.
+- Each user has a unique username, and avatar
+- The backend database has 4 tables:
+  - users - contains user information
+  - topics - contains each topic + description of topic
+  - articles - each article posted to the database, linked to users and topics
+  - comments - each comment associated with an article, linked to an article and a user
+- Essentally Reddit.
 
-To keep track of the tasks involved in this project we're going to use a kanban board. Ensure that you work on one _ticket_ at time. You can click on the ticket to find out more information about what is required for the feature. A ticket is not considered complete unless both the happy path and errors response are handled. You can make use of the checklist on each ticket to keep track of the errors you want to handle. You can also make use of [error-handling.md](error-handling.md) to consider the error codes we may wish to respond with.
+##
 
-**Please ensure you work through the tickets from top to bottom.**
+## Set-up Instructions
 
-## Git Branching and Pull Requests
+1.  Fork and clone repository from https://github.com/Tavelar/nc-news-backend
 
-You will be working on each ticket on a new **branch**.
+2.  Install project dependencies using
 
-To create and switch to a new git branch use the command:
-
-```
-git checkout -b <new branch name>
-```
-
-This will create a branch and move over to that branch. (Omit the `-b` flag if you wish to switch to an already existing branch).
-
-We recommend that you name the branch the number assigned to each ticket. eg. `ncnews-4`
-
-When pushing the branch to git hub ensure that you make reference to the branch you are pushing to on the remote.
-
-```
-git push origin <branch name>
+```sh
+npm install
 ```
 
-From github you can make a pull request and share the link and ticket number on your `nchelp`. A tutor will swing by to review your code. Ensure that you keep your trello up to date whilst you await the PR approval.
+3.  Set up environment variables to point to databases
+    - Need .env.test & .env.development files which reference the respective databases
+    - These files contain a single line of PGDATABASE=your_data_base_name
+    - (test database called nc_news_test)
+4.  Create Test/ Development databases by running the command
 
-Once a pull request been accepted be sure to switch back to the main branch and pull down the updated changes.
-
-```
-git checkout main
-
-git pull origin main
-```
-
-You can tidy up your local branches once they have been pull into main by deleting them:
-
-```
-git branch -D <local branch>
+```sh
+npm run setup-dbs
 ```
 
-## Husky
+5. Seed databases by running the command
 
-To ensure we are not commiting broken code this project makes use of git hooks. Git hooks are scripts triggered during certain events in the git lifecycle. Husky is a popular package which allows us to set up and maintain thjese scripts. This proect makes use a _pre-commit hook_. When we attempt to commit our work, the script defined in the `pre-commit` file will run. If any of our tests fail than the commit will be aborted.
+```sh
+npm run seed
+```
 
-The [Husky documentation](https://typicode.github.io/husky/#/) explains how to configure Husky for your own project as well as creating your own custom hooks.\_
+6. Test code can be ran via Jest. Code is in the **\_\_tests\_\_** folder.
+7. Make a get request to /api to find a description and example for every end point in the api.
+
+## Requirements
+
+- Node.js > v17.5
+- Postgres > v12.9
